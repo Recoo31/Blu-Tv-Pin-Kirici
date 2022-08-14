@@ -29,23 +29,6 @@ if os.path.exists("Blu-Token.txt"):
 os.system('cls')
 
 
-def getpcname():
-    n1 = platform.node()
-    n2 = socket.gethostname()
-    n3 = os.environ["COMPUTERNAME"]
-    if n1 == n2 == n3:
-        return n1
-    elif n1 == n2:
-        return n1
-    elif n1 == n3:
-        return n1
-    elif n2 == n3:
-        return n2
-    else:
-        raise Exception("Bilgisayar İle Alakalı Bir Hata Meydana Geldi")
-
-
-
 print(Colorate.Horizontal(Colors.blue_to_purple, """ 
                                                 (                    
                                                 )\ )                 
