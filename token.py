@@ -90,32 +90,6 @@ else:
     token_r = r.cookies.get("token_r")
 
 
-    head1 = {
-    "Host": "www.blutv.com",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0",
-    "Accept": "*/*",
-    "Accept-Language": "en-US,en;q=0.5",
-    "Accept-Encoding": "gzip, deflate",
-    "Referer": "https://www.blutv.com/giris",
-    "Applanguage": "tr-TR",
-    "Appplatform": "com.blu",
-    "Appcountry": "TUR",
-    "Deviceresolution": "1920x1080",
-    "Content-Type": "text/plain;charset=UTF-8",
-    "X-Instana-T": "f22506a13060ad43",
-    "X-Instana-S": "f22506a13060ad43",
-    "X-Instana-L": "1,correlationType=web;correlationId=f22506a13060ad43",
-    "Origin": "https://www.blutv.com",
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "same-origin",
-    "Te": "trailers",
-    "Cookie": f"token_a={token_a}; token_r={token_r}"
-    }
-
-
-    a = requests.get("https://www.blutv.com/profil", headers=head1).text
-
     token = r.json()['accessToken']
     f = open("Blu-Access.txt", "a")
     f.write(token)
