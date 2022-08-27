@@ -86,10 +86,6 @@ if "errors.wrongUsernameOrPassword" in r.text:
     print("Hesap Yanlış")
     time.sleep(2)
 else:
-    token_a = r.cookies.get("token_a")
-    token_r = r.cookies.get("token_r")
-
-
     token = r.json()['accessToken']
     f = open("Blu-Access.txt", "a")
     f.write(token)
