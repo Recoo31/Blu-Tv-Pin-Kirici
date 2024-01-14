@@ -1,2 +1,2 @@
-py token_1.py
+py main.py
 PAUSE
